@@ -1,0 +1,106 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: |
+  
+Parameters:
+  KeyPairOfFlaskServer:
+    Description: Select your KeyPair!
+    Type: AWS::EC2::KeyPair::KeyName
+  ImageIdOfFlaskServer:
+    Description: 
+    Type: AWS::EC2::Image::Id
+    Default: ami-05fa00d4c63e32376
+  
+Metadata:
+  
+Mappings:
+  
+Conditions:
+  
+Resources:
+  SecGroupOfFlaskServer:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allows SSH and HTTP # Required
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 22
+        ToPort: 22
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 80
+        ToPort: 80
+        CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: SecGroupOfFlaskFromTagName
+  FlaskServer:
+    Type: AWS::EC2::Instance
+    Properties:
+      # AdditionalInfo: "String"
+      # Affinity: "String"
+      # AvailabilityZone: "String" !
+      # BlockDeviceMappings:
+        # BlockDeviceMappings
+      # CpuOptions:
+        # CoreCount: Number
+        # ThreadsPerCore: Number
+      # CreditSpecification:
+        # CPUCredits: "Number"
+      # DisableApiTermination: false
+      # EbsOptimized: false
+      # ElasticGpuSpecifications:
+        # ElasticGpuSpecifications
+      # ElasticInferenceAccelerators:
+        # ElasticInferenceAccelerators
+      # EnclaveOptions:
+        # Enabled: false
+      # HibernationOptions:
+        # Configured: false
+      # HostId: "String"
+      # HostResourceGroupArn: "String"
+      # IamInstanceProfile: "String"
+      ImageId: !Ref ImageIdOfFlaskServer
+      # InstanceInitiatedShutdownBehavior: "String"
+      InstanceType: t2.micro
+      # Ipv6AddressCount: Number
+      # Ipv6Addresses:
+        # Ipv6Addresses
+      # KernelId: "String"
+      KeyName: KeyPairOfFlaskServer
+      # LaunchTemplate: !
+        # LaunchTemplateId: "String"
+        # LaunchTemplateName: "String"
+        # Version: "String"
+      # LicenseSpecifications:
+        # LicenseSpecifications
+      # Monitoring: String
+      # NetworkInterfaces:
+        # NetworkInterfaces
+      # PlacementGroupName: "String"
+      # PrivateDnsNameOptions:
+        # EnableResourceNameDnsAAAARecord: false
+        # EnableResourceNameDnsARecord: false
+        # HostnameType: "String"
+      # PrivateIpAddress: "false" !
+      # PropagateTagsToVolumeOnCreation: String
+      # RamdiskId: "String"
+      SecurityGroupIds:
+        - !GetAtt MySecGroup.GroupId
+      # SourceDestCheck: false
+      # SsmAssociations:
+        # SsmAssociations
+      Tags:
+        - Key: Name
+          Value: !Sub Web Server Of ${AWS::StackName} Stack
+      # Tenancy: "String"
+      UserData: !Base64 |
+        #!/bin/bash
+        sudo yum update
+        sudo pip3 install Flask
+
+
+      # Volumes:
+         # Volumes
+# Transform:
+  
+Outputs:
