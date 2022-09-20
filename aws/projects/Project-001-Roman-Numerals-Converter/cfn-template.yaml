@@ -1,20 +1,22 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: |
+  This CloudFormation Template was written for running Roman Numerals Converter Website on EC2. Roman Numerals Converter Website will be deployed on Amazon Linux 2 (XXXXXXXXXXXX) EC2 Instance with custom security group which allows http connections on port 80 and ssh port 22 from anywhere. Roman Numerals Converter Website 
+  is downloaded from my Public Github repository, then deployed with Flask Framework.
   
 Parameters:
   KeyPairOfFlaskServer:
     Description: Select your KeyPair!
     Type: AWS::EC2::KeyPair::KeyName
   ImageIdOfFlaskServer:
-    Description: 
-    Type: AWS::EC2::Image::Id
+    Description: Image Id Of Flask Server
+    Type: String # AWS::EC2::Image::Id
     Default: ami-05fa00d4c63e32376
+
+#Metadata:
   
-Metadata:
+#Mappings:
   
-Mappings:
-  
-Conditions:
+#Conditions:
   
 Resources:
   SecGroupOfFlaskServer:
@@ -85,7 +87,7 @@ Resources:
       # PropagateTagsToVolumeOnCreation: String
       # RamdiskId: "String"
       SecurityGroupIds:
-        - !GetAtt MySecGroup.GroupId
+        - !Ref SecGroupOfFlaskServer
       # SourceDestCheck: false
       # SsmAssociations:
         # SsmAssociations
@@ -97,10 +99,17 @@ Resources:
         #!/bin/bash
         sudo yum update
         sudo pip3 install Flask
-
-
+        sudo yum install git -y
+        sudo git clone https://github.com/pol-ayt/my-projects.git
+        cd /home/ec2-user/my-projects/Project-001-Roman-Numerals-Converter
+        sudo python3 app.py
       # Volumes:
          # Volumes
 # Transform:
   
 Outputs:
+  WebsiteURL:
+    Value: !Sub 
+      - http://${PublicAddress}
+      - PublicAddress: !GetAtt FlaskServer.PublicDnsName
+    Description: Roman Numerals URL
