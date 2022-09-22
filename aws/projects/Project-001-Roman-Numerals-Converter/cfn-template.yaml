@@ -7,11 +7,6 @@ Parameters:
   KeyPairOfFlaskServer:
     Description: Select your KeyPair!
     Type: AWS::EC2::KeyPair::KeyName
-  ImageIdOfFlaskServer:
-    Description: Image Id Of Flask Server
-    Type: String # AWS::EC2::Image::Id
-    Default: ami-05fa00d4c63e32376
-
 #Metadata:
   
 #Mappings:
@@ -61,14 +56,14 @@ Resources:
       # HostId: "String"
       # HostResourceGroupArn: "String"
       # IamInstanceProfile: "String"
-      ImageId: !Ref ImageIdOfFlaskServer
+      ImageId: ami-05fa00d4c63e32376
       # InstanceInitiatedShutdownBehavior: "String"
       InstanceType: t2.micro
       # Ipv6AddressCount: Number
       # Ipv6Addresses:
         # Ipv6Addresses
       # KernelId: "String"
-      KeyName: KeyPairOfFlaskServer
+      KeyName: !Ref KeyPairOfFlaskServer
       # LaunchTemplate: !
         # LaunchTemplateId: "String"
         # LaunchTemplateName: "String"
@@ -97,12 +92,17 @@ Resources:
       # Tenancy: "String"
       UserData: !Base64 |
         #!/bin/bash
-        sudo yum update
-        sudo pip3 install Flask
-        sudo yum install git -y
-        sudo git clone https://github.com/pol-ayt/my-projects.git
-        cd /home/ec2-user/my-projects/Project-001-Roman-Numerals-Converter
-        sudo python3 app.py
+        yum update -y
+        pip3 install Flask
+        yum install git -y
+        cd /home/ec2-user
+        FOLDER="https://raw.githubusercontent.com/pol-ayt/my-projects/main/aws/projects/Project-001-Roman-Numerals-Converter"
+        wget ${FOLDER}/app.py
+        mkdir templates && cd templates
+        wget ${FOLDER}/templates/index.html
+        wget ${FOLDER}/templates/result.html
+        cd ..
+        python3 app.py
       # Volumes:
          # Volumes
 # Transform:
