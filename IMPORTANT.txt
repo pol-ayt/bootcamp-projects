@@ -1,3 +1,3 @@
 github da dosya cekmek icin olusturulan bazi repolar silindi. 
 Bu sebeble projelerin userdata gibi ilgili kisilari guncellenmeli. 203 kodlu proje calismayacak. 
-Capstone projeleri capstone kisminda sergilenecek.
+Capstone projeleri capstone kisminda sergilenmeyecek.
