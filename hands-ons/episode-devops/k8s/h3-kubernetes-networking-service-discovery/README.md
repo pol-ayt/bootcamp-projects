@@ -1,38 +1,13 @@
 # Hands-on Kubernetes-03 : Kubernetes Networking and Service Discovery
 
-Purpose of this hands-on training is to give students the knowledge of Kubernetes Services.
+Knowledge of Kubernetes Services.
 
-## Learning Outcomes
-
-At the end of the this hands-on training, students will be able to;
-
-- Explain the benefits of logically grouping `Pods` with `Services` to access an application.
-
-- Explore the service discovery options available in Kubernetes.
-
-- Learn different types of Services in Kubernetes.
 
 ## Outline
 
-- Part 1 - Setting up the Kubernetes Cluster
+- Part 1 - Services, Load Balancing, and Networking in Kubernetes
 
-- Part 2 - Services, Load Balancing, and Networking in Kubernetes
-
-## Part 1 - Setting up the Kubernetes Cluster
-
-- Launch a Kubernetes Cluster of Ubuntu 20.04 with two nodes (one master, one worker) using the [Cloudformation Template to Create Kubernetes Cluster](../kubernetes-02-basic-operations/cfn-template-to-create-k8s-cluster.yml). *Note: Once the master node up and running, worker node automatically joins the cluster.*
-
->*Note: If you have problem with kubernetes cluster, you can use this link for lesson.*
->https://www.katacoda.com/courses/kubernetes/playground
-
-- Check if Kubernetes is running and nodes are ready.
-
-```bash
-kubectl cluster-info
-kubectl get no
-```
-
-## Part 2 - Services, Load Balancing, and Networking in Kubernetes
+## Part 1 - Services, Load Balancing, and Networking in Kubernetes
 
 Kubernetes networking addresses four concerns:
 
