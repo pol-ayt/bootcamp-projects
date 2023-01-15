@@ -1,0 +1,5 @@
+---
+# vars file for react
+react_container: /home/ec2-user/react
+container_name: pol_react
+image_name: polatdocker/react

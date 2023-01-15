@@ -1,0 +1,5 @@
+---
+# vars file for nodejs
+nodejs_container: /home/ec2-user/nodejs
+container_name: pol_nodejs
+image_name: polatdocker/nodejs
